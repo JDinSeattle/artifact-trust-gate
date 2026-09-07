@@ -1,0 +1,56 @@
+[
+  {
+    "blob": "artifact.bin",
+    "identity": "allowed",
+    "signature": "artifact.sig",
+    "stdout": ""
+  },
+  {
+    "blob": "provenance.json",
+    "identity": "allowed",
+    "signature": "provenance.sig",
+    "stdout": ""
+  },
+  {
+    "blob": "artifact.bin",
+    "identity": "foreign",
+    "signature": "foreign-artifact.sig",
+    "stdout": ""
+  },
+  {
+    "blob": "provenance.json",
+    "identity": "foreign",
+    "signature": "foreign-provenance.sig",
+    "stdout": ""
+  },
+  {
+    "blob": "provenance_mismatch.json",
+    "identity": "allowed",
+    "signature": "provenance_mismatch.sig",
+    "stdout": ""
+  },
+  {
+    "blob": "wrong_builder.json",
+    "identity": "allowed",
+    "signature": "wrong_builder.sig",
+    "stdout": ""
+  },
+  {
+    "blob": "unknown_algorithm.json",
+    "identity": "allowed",
+    "signature": "unknown_algorithm.sig",
+    "stdout": ""
+  },
+  {
+    "blob": "unknown_format.json",
+    "identity": "allowed",
+    "signature": "unknown_format.sig",
+    "stdout": ""
+  },
+  {
+    "blob": "wrong_predicate.json",
+    "identity": "allowed",
+    "signature": "wrong_predicate.sig",
+    "stdout": ""
+  }
+]

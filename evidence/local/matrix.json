@@ -1,0 +1,142 @@
+[
+  {
+    "actual": "allow",
+    "case": "valid",
+    "expected": "allow",
+    "reason": {
+      "artifact_path": "objects/3438deea4810531221c6043dd7c1a4d8e617519db920698a86bf4ecc17ac39ae",
+      "artifact_sha256": "3438deea4810531221c6043dd7c1a4d8e617519db920698a86bf4ecc17ac39ae",
+      "builder": "local:gemm-release-builder",
+      "manifest_sha256": "b527a2cd49da1139e5561d2e0fdf9ad1700deeabed939d455016a4647eea9ca4",
+      "policy_sha256": "964401addc01eb97e54dde37cf8184a6216cad8b3a8e9a464e23af62154f92c3",
+      "schema": 1,
+      "signature_results": [
+        {
+          "exit_code": 0,
+          "stderr": "WARNING: Skipping tlog verification is an insecure practice that lacks transparency and auditability verification for the blob.\nVerified OK"
+        },
+        {
+          "exit_code": 0,
+          "stderr": "WARNING: Skipping tlog verification is an insecure practice that lacks transparency and auditability verification for the blob.\nVerified OK"
+        }
+      ],
+      "signer_sha256": "2d9ef58fa286beabe7275542a59d1a1a0c8546d47a5b4acae59f1cf1205803bd",
+      "verifier_sha256": "064954c5d8c7e3b28188eee5b1727b31c411550bc5fefd41aa672d3c761d103a"
+    }
+  },
+  {
+    "actual": "allow",
+    "case": "idempotent",
+    "expected": "allow",
+    "reason": {
+      "artifact_path": "objects/3438deea4810531221c6043dd7c1a4d8e617519db920698a86bf4ecc17ac39ae",
+      "artifact_sha256": "3438deea4810531221c6043dd7c1a4d8e617519db920698a86bf4ecc17ac39ae",
+      "builder": "local:gemm-release-builder",
+      "manifest_sha256": "b527a2cd49da1139e5561d2e0fdf9ad1700deeabed939d455016a4647eea9ca4",
+      "policy_sha256": "964401addc01eb97e54dde37cf8184a6216cad8b3a8e9a464e23af62154f92c3",
+      "schema": 1,
+      "signature_results": [
+        {
+          "exit_code": 0,
+          "stderr": "WARNING: Skipping tlog verification is an insecure practice that lacks transparency and auditability verification for the blob.\nVerified OK"
+        },
+        {
+          "exit_code": 0,
+          "stderr": "WARNING: Skipping tlog verification is an insecure practice that lacks transparency and auditability verification for the blob.\nVerified OK"
+        }
+      ],
+      "signer_sha256": "2d9ef58fa286beabe7275542a59d1a1a0c8546d47a5b4acae59f1cf1205803bd",
+      "verifier_sha256": "064954c5d8c7e3b28188eee5b1727b31c411550bc5fefd41aa672d3c761d103a"
+    }
+  },
+  {
+    "actual": "reject",
+    "case": "byte_tamper",
+    "expected": "reject",
+    "reason": "artifact/provenance digest mismatch"
+  },
+  {
+    "actual": "reject",
+    "case": "tag_retarget_old_signature",
+    "expected": "reject",
+    "reason": "artifact/provenance digest mismatch"
+  },
+  {
+    "actual": "reject",
+    "case": "unauthorized_key",
+    "expected": "reject",
+    "reason": "signer not authorized"
+  },
+  {
+    "actual": "reject",
+    "case": "valid_math_unauthorized_signer",
+    "expected": "reject",
+    "reason": "signer not authorized"
+  },
+  {
+    "actual": "reject",
+    "case": "wrong_signature",
+    "expected": "reject",
+    "reason": "signature verification failed"
+  },
+  {
+    "actual": "reject",
+    "case": "provenance_mismatch",
+    "expected": "reject",
+    "reason": "artifact/provenance digest mismatch"
+  },
+  {
+    "actual": "reject",
+    "case": "wrong_builder",
+    "expected": "reject",
+    "reason": "provenance policy mismatch: builder"
+  },
+  {
+    "actual": "reject",
+    "case": "unknown_algorithm",
+    "expected": "reject",
+    "reason": "provenance policy mismatch: digest_algorithm"
+  },
+  {
+    "actual": "reject",
+    "case": "unknown_format",
+    "expected": "reject",
+    "reason": "provenance policy mismatch: signature_format"
+  },
+  {
+    "actual": "reject",
+    "case": "wrong_predicate",
+    "expected": "reject",
+    "reason": "provenance policy mismatch: predicate_type"
+  },
+  {
+    "actual": "reject",
+    "case": "corrupt_signature",
+    "expected": "reject",
+    "reason": "signature verification failed"
+  },
+  {
+    "actual": "reject",
+    "case": "verifier_crash",
+    "expected": "reject",
+    "reason": "signature verification failed"
+  },
+  {
+    "actual": "reject",
+    "case": "verifier_timeout",
+    "expected": "reject",
+    "reason": "verifier unavailable or timed out"
+  },
+  {
+    "actual": "reject",
+    "case": "symlink_input",
+    "expected": "reject",
+    "reason": "unreadable or symlink input"
+  },
+  {
+    "actual": "reject",
+    "case": "post_promotion_tamper",
+    "expected": "reject",
+    "reason": "consumer rehash before exec"
+  }
+]

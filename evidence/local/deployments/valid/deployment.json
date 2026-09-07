@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "artifact_sha256": "3438deea4810531221c6043dd7c1a4d8e617519db920698a86bf4ecc17ac39ae",
+  "policy_sha256": "964401addc01eb97e54dde37cf8184a6216cad8b3a8e9a464e23af62154f92c3",
+  "signer_sha256": "2d9ef58fa286beabe7275542a59d1a1a0c8546d47a5b4acae59f1cf1205803bd",
+  "manifest_sha256": "b527a2cd49da1139e5561d2e0fdf9ad1700deeabed939d455016a4647eea9ca4",
+  "verifier_sha256": "064954c5d8c7e3b28188eee5b1727b31c411550bc5fefd41aa672d3c761d103a",
+  "builder": "local:gemm-release-builder",
+  "signature_results": [
+    {
+      "exit_code": 0,
+      "stderr": "WARNING: Skipping tlog verification is an insecure practice that lacks transparency and auditability verification for the blob.\nVerified OK"
+    },
+    {
+      "exit_code": 0,
+      "stderr": "WARNING: Skipping tlog verification is an insecure practice that lacks transparency and auditability verification for the blob.\nVerified OK"
+    }
+  ],
+  "artifact_path": "objects/3438deea4810531221c6043dd7c1a4d8e617519db920698a86bf4ecc17ac39ae"
+}
