@@ -1,0 +1,21 @@
+python3 -m unittest discover -s tests -v
+test_duplicate_json_rejected (test_gate.GateTests.test_duplicate_json_rejected) ... ok
+test_invalid_json_reject (test_gate.GateTests.test_invalid_json_reject) ... ok
+test_malformed_deployment_record (test_gate.GateTests.test_malformed_deployment_record) ... ok
+test_nonfinite_json_rejected (test_gate.GateTests.test_nonfinite_json_rejected) ... ok
+test_nonregular_file_is_rejected_without_blocking (test_gate.GateTests.test_nonregular_file_is_rejected_without_blocking) ... ok
+test_symlink_and_limit_reject (test_gate.GateTests.test_symlink_and_limit_reject) ... ok
+test_verifier_unavailable_and_failure (test_gate.GateTests.test_verifier_unavailable_and_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+OK
+python3 scripts/validate.py --out .runs/latest
+{
+  "matrix_cases": 17,
+  "all_expected": true,
+  "consumed_values": [
+    1.546875
+  ]
+}

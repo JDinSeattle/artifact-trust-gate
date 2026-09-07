@@ -1,0 +1,20 @@
+[
+  {
+    "blob_sha256": "3438deea4810531221c6043dd7c1a4d8e617519db920698a86bf4ecc17ac39ae",
+    "result": {
+      "exit_code": 0,
+      "stderr": "WARNING: Skipping tlog verification is an insecure practice that lacks transparency and auditability verification for the blob.\nVerified OK"
+    },
+    "signed_with": "Cosign 2.6.1",
+    "verified_with": "Cosign 2.6.5"
+  },
+  {
+    "blob_sha256": "b527a2cd49da1139e5561d2e0fdf9ad1700deeabed939d455016a4647eea9ca4",
+    "result": {
+      "exit_code": 0,
+      "stderr": "WARNING: Skipping tlog verification is an insecure practice that lacks transparency and auditability verification for the blob.\nVerified OK"
+    },
+    "signed_with": "Cosign 2.6.1",
+    "verified_with": "Cosign 2.6.5"
+  }
+]

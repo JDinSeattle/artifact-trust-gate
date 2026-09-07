@@ -1,0 +1,9 @@
+{
+  "builder": "local:gemm-release-builder",
+  "digest_algorithm": "sha256",
+  "predicate_type": "https://example.invalid/clinic/build/v1",
+  "schema": 1,
+  "signature_format": "cosign-detached-v1",
+  "source_sha256": "a08c98ddf9b9e5d45a53bbd4161561fb030fc7333bb7e2b0c0d0e86f4930ab33",
+  "subject_sha256": "3438deea4810531221c6043dd7c1a4d8e617519db920698a86bf4ecc17ac39ae"
+}

@@ -13,13 +13,14 @@ class Rejected(ValueError): pass
 def sha(data): return hashlib.sha256(data).hexdigest()
 
 def load_json(data):
+    def constant(value):raise Rejected('nonfinite JSON constant: '+value)
     def unique(pairs):
         out={}
         for k,v in pairs:
             if k in out: raise Rejected('duplicate JSON key')
             out[k]=v
         return out
-    try: return json.loads(data,object_pairs_hook=unique)
+    try: return json.loads(data,object_pairs_hook=unique,parse_constant=constant)
     except (ValueError,TypeError) as e: raise Rejected('invalid JSON') from e
 
 def read_regular(path,limit):
@@ -51,6 +52,7 @@ def promote(*,artifact,manifest,artifact_signature,manifest_signature,key,policy
     if not isinstance(pol,dict) or set(pol)!={'version','public_key_sha256','builder','predicate_type','signature_format','digest_algorithm'}:
         raise Rejected('policy schema')
     if pol['version']!=1 or type(pol['version']) is not int: raise Rejected('policy version')
+    if any(not isinstance(pol[k],str) or not pol[k] or len(pol[k])>256 for k in ['builder','predicate_type']):raise Rejected('policy field type')
     if pol['signature_format']!='cosign-detached-v1' or pol['digest_algorithm']!='sha256': raise Rejected('unsupported signature format or algorithm')
     if sha(snapshots['signer.pub'])!=pol['public_key_sha256']: raise Rejected('signer not authorized')
     if not isinstance(m,dict) or set(m)!={'schema','subject_sha256','builder','predicate_type','source_sha256','signature_format','digest_algorithm'}:
@@ -94,14 +96,20 @@ def promote(*,artifact,manifest,artifact_signature,manifest_signature,key,policy
 
 def consume(store,arguments):
     store=pathlib.Path(store); record=load_json(read_regular(store/'deployment.json',65536))
-    digest=record['artifact_sha256']
-    if len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest): raise Rejected('deployment digest syntax')
+    if not isinstance(record,dict):raise Rejected('deployment schema')
+    digest=record.get('artifact_sha256')
+    if not isinstance(digest,str) or len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest): raise Rejected('deployment digest syntax')
+    if record.get('artifact_path')!='objects/'+digest:raise Rejected('deployment path/digest mismatch')
+    if (store/'objects').is_symlink():raise Rejected('symlink object directory')
     path=store/'objects'/digest
     # Execute the same opened inode whose bytes were hashed (Linux /proc/self/fd).
-    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
+    try:fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+    except OSError as e:raise Rejected('deployment object unavailable') from e
     try:
+        info=os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode) or info.st_size>16*1024*1024:raise Rejected('deployment object type or size')
         with os.fdopen(os.dup(fd),'rb') as f:
-            if sha(f.read())!=digest: raise Rejected('deployment digest mismatch')
+            if sha(f.read(16*1024*1024+1))!=digest: raise Rejected('deployment digest mismatch')
         return subprocess.run([f'/proc/self/fd/{fd}',*arguments],pass_fds=(fd,),capture_output=True,text=True,timeout=5,check=True).stdout
     finally: os.close(fd)
 

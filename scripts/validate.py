@@ -9,6 +9,11 @@ def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--out',default='.runs/latest'); args=ap.parse_args()
     out=fresh(ROOT,args.out)
     tool=setup(); (ROOT/'build').mkdir(exist_ok=True)
+    historical=ROOT/'evidence/local';compatibility=[]
+    for blob,sig in [('artifact.bin','artifact.sig'),('provenance.json','provenance.sig')]:
+        compatibility.append({'signed_with':'Cosign 2.6.1','verified_with':'Cosign 2.6.5','blob_sha256':digest(historical/blob),
+            'result':verify_signature(tool,historical/'allowed.pub',historical/sig,historical/blob,5)})
+    write(out/'historical-signature-compatibility.json',compatibility)
     source=ROOT/'vendor/gemm.cpp'; artifact=ROOT/'build/gemm'
     assert digest(source)==json.loads((ROOT/'vendor/lock.json').read_text())['sha256']
     command(['g++','-std=c++17','-O3',str(source),'-o',str(artifact)])

@@ -2,11 +2,17 @@
 
 [![verify](https://github.com/JDinSeattle/artifact-trust-gate/actions/workflows/ci.yml/badge.svg)](https://github.com/JDinSeattle/artifact-trust-gate/actions/workflows/ci.yml)
 
-An offline release gate for the CPU GEMM executable. It uses real **Cosign 2.6.1** signatures and separates valid signature mathematics from signer authorization and provenance policy. The gate snapshots inputs once, verifies both executable and provenance, promotes content-addressed bytes, and records the exact deployment digest.
+An offline release gate for the CPU GEMM executable. It uses real **Cosign 2.6.5** signatures and separates valid signature mathematics from signer authorization and provenance policy. The gate snapshots inputs once, verifies both executable and provenance, promotes content-addressed bytes, and records the exact deployment digest.
 
 The allow/reject matrix contains 17 cases, including valid release, idempotence, byte tampering, stale-signature tag retargeting (local path analogue), a mathematically valid unauthorized signer, wrong signature, unknown algorithm/format, wrong builder/predicate, verifier crash/timeout, symlink input, and post-promotion tampering. The consumer rehashes and executes the same opened inode via `/proc/self/fd`.
 
 Private test keys are generated in a temporary directory and removed; only public keys, signatures, test-owned executables and verification evidence are archived. This is local-key authorization, not keyless CI identity, admission control, vulnerability scanning, compliance certification or a SLSA level claim.
+
+## September 2026 maintenance
+
+The verifier moves from Cosign 2.6.1 to the maintained 2.6.5 patch. The campaign additionally verifies the checked-in historical executable and provenance signatures with the new binary. JSON parsing rejects nonfinite constants; policy identity fields require bounded strings. Consumption validates the deployment record, rejects symlinked object directories and opens the executable with O_NOFOLLOW and O_NONBLOCK before checking regular-file type and size. A FIFO regression proves rejection without blocking.
+
+[Design, acceptance tests and limits](docs/refresh-20260907.md) · [Current measured results](docs/refresh-results-20260907.md). CI repeats validation on Python 3.12 and 3.14.7.
 
 ## Reproduce
 
