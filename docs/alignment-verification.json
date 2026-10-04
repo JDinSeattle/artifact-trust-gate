@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-04T04:18:23.213090+00:00",
+  "provenance": "Owner-confirmed cloud results remain separate from these local checks.",
+  "notes": [
+    "7 regressions and 17 real-signature decisions passed; evidence manifests validate."
+  ],
+  "checks": [
+    {
+      "command": "make verify evidence-check",
+      "exit_code": 0,
+      "elapsed_seconds": 5.08,
+      "log_sha256": "d14bcff422ddc0d9c64c09a6a2fb201438401a54329c5b7c2135ab3502b23132"
+    }
+  ]
+}

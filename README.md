@@ -1,5 +1,21 @@
 # Artifact Trust Gate
 
+## Experience Bank results
+
+The results below are the owner-confirmed results from a separate cloud-hosted test environment, synchronized from the Experience Bank. The experiments retain the local, synthetic, simulator, CPU, Docker and single-host boundaries stated in each result; cloud hosting does not imply production deployment. This repository refresh does not represent a rerun of those measurements. Earlier dated evidence below remains tied to its own source, configuration and denominator.
+
+1. Separated digest integrity, signature validity, and release authorization in an offline pinned-key gate on Ubuntu 24.04 x86_64 (Python 3.12.13, Cosign 2.6.5) that evaluated 17 real-signature decisions: 4 allow controls, 3 corrupted signature bytes, 2 foreign keys, 3 provenance-policy errors, 3 subject/content errors, and 2 non-regular files.
+
+2. Proved authorization is not the same as cryptographic validity: each foreign-key case first verified successfully under its own public key and was then rejected by the fixed release policy (builder.id local-builder/v1, fixed predicateType, subject digest equal to the artifact digest), so the rejection came from authorization rather than a broken signature.
+
+3. Consumed digest-identified bytes rather than paths: across 20 path-replacement rounds, the verified descriptor executed the original 128 KiB static CPU ELF after its path was renamed to another ELF and kept returning the deterministic matrix checksum, 6 for fixed input [2]x[3] instead of the replacement's 123.
+
+4. Hardened parsing and deployment: duplicate JSON keys and non-finite numbers rejected, inputs opened with NOFOLLOW/NONBLOCK then fstat-required to be regular files, and a FIFO input returned non_regular within 50 ms without waiting for read/write ends, with 7 local regressions passing.
+
+5. Maintained verifier currency without expanding trust: Cosign 2.6.5 verified two historical detached signatures produced by 2.6.1, and the detached workflow is not asserted to have been affected by the legacy-bundle issue that the maintenance release addresses.
+
+See the [implementation and reproduction map](docs/experience-bank-alignment.md) for per-result source/tests, reproduction commands and limitations.
+
 [![verify](https://github.com/JDinSeattle/artifact-trust-gate/actions/workflows/ci.yml/badge.svg)](https://github.com/JDinSeattle/artifact-trust-gate/actions/workflows/ci.yml)
 
 An offline release gate for the CPU GEMM executable. It uses real **Cosign 2.6.5** signatures and separates valid signature mathematics from signer authorization and provenance policy. The gate snapshots inputs once, verifies both executable and provenance, promotes content-addressed bytes, and records the exact deployment digest.
